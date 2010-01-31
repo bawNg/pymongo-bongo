@@ -33,6 +33,10 @@ class AttributedDict(object):
         self._data.__delitem__(name)
 
 
+    def __getitem__(self, name): return self.__getattr__(name)
+    def __setitem__(self, name, value): self.__setattr__(name, value)
+
+
     def __eq__(self, d):
         if isinstance(d, AttributedDict):
             return self._data == d._data
@@ -50,6 +54,11 @@ class AttributedDict(object):
         for key, value in self._data.iteritems():
             yield (key, _wrap(value))
 
+    def __len__(self):
+        return len(self._data)
+
+    def __repr__(self):
+        return "<'AttributedDict' %s>" % self._data
 
 
 class AttributedList(object):
@@ -71,3 +80,8 @@ class AttributedList(object):
     def __ne__(self, l):
         return not self.__eq__(l)
 
+    def __len__(self):
+        return len(self._data)
+
+    def __repr__(self):
+        return "<'AttributedList' %s>" % self._data
